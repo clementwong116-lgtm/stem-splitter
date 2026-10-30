@@ -1,0 +1,13 @@
+services:
+  - type: web
+    name: stem-splitter
+    runtime: docker
+    plan: free
+    healthCheckPath: /api/health
+    dockerContext: .
+    dockerfilePath: ./Dockerfile
+    envVars:
+      - key: STEM_PROVIDER
+        value: ffmpeg
+      - key: STEMSPLIT_API_KEY
+        sync: false

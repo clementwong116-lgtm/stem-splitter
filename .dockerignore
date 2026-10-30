@@ -1,0 +1,13 @@
+.venv
+venv
+__pycache__
+*.pyc
+data/uploads/*
+data/outputs/*
+data/jobs.json
+.git
+.env
+.env.*
+tests
+*.md
+!README.md

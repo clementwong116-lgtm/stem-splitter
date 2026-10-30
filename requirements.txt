@@ -1,0 +1,13 @@
+# Optional AI path (preferred when installable):
+demucs>=4.0.1
+torch>=2.1.0
+soundfile>=0.12.1
+numpy>=1.26.0
+
+# Optional alternative web stack (app.py uses stdlib HTTP by default):
+# fastapi>=0.115.0
+# uvicorn[standard]>=0.32.0
+# python-multipart>=0.0.12
+
+# CPU torch tip:
+#   pip install torch --index-url https://download.pytorch.org/whl/cpu

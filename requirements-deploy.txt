@@ -1,0 +1,7 @@
+# Runtime is stdlib-only (http.server + urllib). No pip packages required
+# for the ffmpeg mid/side fallback path.
+# Optional later:
+# demucs>=4.0.1
+# torch>=2.1.0
+# soundfile>=0.12.1
+# numpy>=1.26.0

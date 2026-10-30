@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <title>人聲分離器 · Stem Splitter</title>
+  <meta name="description" content="本機 AI 人聲／伴奏分離與人聲消除（Vocal Remover）。可安裝到手機主畫面。" />
+  <meta name="theme-color" content="#6366f1" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="人聲分離" />
+  <meta name="application-name" content="人聲分離器" />
+  <link rel="manifest" href="/static/manifest.webmanifest" />
+  <link rel="icon" type="image/png" sizes="192x192" href="/static/icon-192.png" />
+  <link rel="apple-touch-icon" href="/static/apple-touch-icon.png" />
+  <link rel="stylesheet" href="/static/app.css" />
+</head>
+<body>
+  <div class="app">
+    <header>
+      <div class="badge">本機 Demo · PWA</div>
+      <h1 id="page-title">人聲／伴奏 分離</h1>
+      <p class="subtitle" id="page-subtitle">上傳一首歌，AI 分離出<strong>人聲</strong>與<strong>伴奏</strong>，可即時預覽並下載。</p>
+    </header>
+
+    <div id="install-banner" class="install-banner" role="status">
+      <span>可安裝到主畫面，離線也能開啟介面。</span>
+      <span style="display:flex;gap:8px;">
+        <button type="button" class="btn btn-ghost" id="dismiss-install">稍後</button>
+        <button type="button" class="btn btn-primary" id="install-btn" style="width:auto;margin:0;">安裝</button>
+      </span>
+    </div>
+
+    <section class="card">
+      <div class="mode-row" role="tablist" aria-label="功能模式">
+        <button
+          type="button"
+          class="mode-chip active"
+          role="tab"
+          id="mode-split"
+          data-mode="split"
+          aria-selected="true"
+          title="分離人聲與伴奏"
+        >
+          人聲／伴奏
+          <small>Vocals + Instrumental</small>
+        </button>
+        <button
+          type="button"
+          class="mode-chip"
+          role="tab"
+          id="mode-vocal-remover"
+          data-mode="vocal_remover"
+          aria-selected="false"
+          title="消除人聲，留下伴奏／卡拉OK"
+        >
+          人聲消除
+          <small>Vocal Remover · Karaoke</small>
+        </button>
+      </div>
+
+      <div
+        id="dropzone"
+        class="dropzone"
+        role="button"
+        tabindex="0"
+        aria-label="上傳音訊檔案"
+      >
+        <div class="icon" aria-hidden="true">🎵</div>
+        <strong id="file-name">點擊或拖放音訊到這裡</strong>
+        <p class="formats">支援 MP3、WAV、FLAC、M4A、OGG（建議短於約 5 分鐘）</p>
+      </div>
+      <input id="file" type="file" accept=".mp3,.wav,.flac,.m4a,.ogg,.aac,audio/*" />
+
+      <button type="button" class="btn btn-primary" id="start-btn" disabled>開始分離</button>
+
+      <div id="status" class="status" aria-live="polite">
+        <div class="label">狀態</div>
+        <div class="msg" id="status-msg">—</div>
+        <div class="progress"><span id="progress-bar"></span></div>
+        <div class="warn" id="status-warn"></div>
+        <div class="err" id="status-err"></div>
+      </div>
+    </section>
+
+    <section id="results" class="card results">
+      <h2 id="results-heading" style="margin:0 0 4px;font-size:1.1rem;">分離結果</h2>
+      <p id="results-desc" style="margin:0;color:var(--muted);font-size:0.85rem;">可直接播放預覽，或下載 WAV。</p>
+
+      <div class="stem stem-primary" id="stem-instrumental">
+        <h3 id="instr-title">伴奏 <span class="tag">Instrumental</span></h3>
+        <audio id="audio-instrumental" controls preload="metadata"></audio>
+        <div class="actions">
+          <a class="btn btn-download" id="dl-instrumental" download>下載伴奏</a>
+        </div>
+      </div>
+
+      <div class="stem" id="stem-vocals">
+        <h3 id="vocals-title">人聲 <span class="tag">Vocals</span></h3>
+        <audio id="audio-vocals" controls preload="metadata"></audio>
+        <div class="actions">
+          <a class="btn btn-download" id="dl-vocals" download>下載人聲</a>
+        </div>
+      </div>
+    </section>
+
+    <p class="hint">
+      CPU 本機分離較慢；長音檔可能耗用大量記憶體。<br />
+      可選 StemSplit 雲端 API（金鑰只放伺服器）或本機 Demucs／ffmpeg。
+    </p>
+
+    <footer>
+      Stem Splitter PWA · 資料存放於伺服器 <code>data/</code>
+    </footer>
+  </div>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
